@@ -15,7 +15,8 @@ const userLoader = new DataLoader(batchGetUserByIds);
 // so pretend you get a GQL query which wants all the users
 
 userLoader.load(1);
-userLoader.load(2).then((res) => {
+userLoader.load(2);
+userLoader.load(3).then((res) => {
     console.log('\njust one user', res)
 /*
     notice how res is just one user, not all of them
@@ -32,8 +33,6 @@ userLoader.load(2).then((res) => {
     here is the value that I ultimately returned for that"
 */
 });
-userLoader.load(3);
-
 // notice how this doesn't get run again since it was cached
 // but we still get access to all the values
 userLoader.loadMany([1,2,3]).then(res => {
