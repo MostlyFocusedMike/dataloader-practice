@@ -1,24 +1,27 @@
 const DataLoader = require('dataloader');
-// dataloader function must accept only an array and then return a promise with resolves to an array of equal length
-const batchGetUserByIds = (ids) => {
-    console.log('\nI only fire once per tick of the event loop');
-    console.log(ids);
+const fakeDB = ['Tom', 'Bo', 'Kate', 'Sara', 'Gene', 'Noel']
 
-    return Promise.resolve(ids);
+const batchGetUserByIds = async (ids) => {
+    console.log('called once per tick with all ids:', ids);
+    return ids.map(id => fakeDB[id - 1]);
 };
 const userLoader = new DataLoader(batchGetUserByIds);
 
+console.log('\nEvent Tick 1')
 userLoader.load(1);
-userLoader.load(2);
-userLoader.load(3);
+userLoader.load(2).then(user => {
+    // we will only get a single user, not an array
+    console.log('here is the user: ', user);
+});
 
-// Force next-ticks in event loop
 setTimeout(() => {
-  userLoader.load(4);
-  userLoader.load(5);
-  userLoader.load(6);
+    console.log('\nEvent Tick 2')
+    userLoader.load(3);
+    userLoader.load(4);
 }, 1000);
 
 setTimeout(() => {
-    userLoader.loadMany([7,8,9]); // load many keys at once
+    console.log('\nEvent Tick 3')
+    userLoader.load(5);
+    userLoader.load(6);
 }, 2000);

@@ -13,7 +13,7 @@ FROM authors;
 
 SELECT *
 FROM books
-WHERE author_id in (?, ?, ?) # an array of the author's ids
+WHERE author_id in (?, ?, ?) -- an array of the author's ids
 ```
 
 Boom done. 2 queries. Hot stuff. Here's the issue, this only works because your second query already had a list of every author id. GraphQL doesn't work that way since each resolver function only knows about its own parent. So this GraphQL query:
@@ -41,7 +41,7 @@ FROM authors;
 
 SELECT *
 FROM books
-WHERE author_id = 1;
+WHERE author_id in (1);
 
 SELECT *
 FROM books
