@@ -8,19 +8,19 @@ const fakeBooksDB = [
 ];
 
 const batchGetBooksByIds = async (ids) => {
-    console.log('I only get run once per tick')
-    const books = ids.map(authorId => {
-        return fakeBooksDB.filter(book => book.author_id === authorId)
-    })
-    console.log('books: ', books);
+    const books = ids.map((authorId) => {
+        return fakeBooksDB.filter(book => book.author_id === authorId);
+    });
+    console.log('books: ', JSON.stringify(books, null, 2));
     return books;
 };
 const userLoader = new DataLoader(batchGetBooksByIds);
 
-// pretend we have 3 author objects, and each one wants a list of their books:
-for(let i = 1; i <= 3; i++) {
+// pretend we have 3 author objects,
+// and each one wants a list of their books:
+for (let i = 1; i <= 3; i++) {
     userLoader.load(i).then((res) => {
-        console.log(`Author #${i} books:`);
+        console.log(`\nAuthor #${i} books:`);
         console.log(res);
     });
 }

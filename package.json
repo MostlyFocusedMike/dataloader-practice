@@ -11,5 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "dataloader": "^1.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0"
   }
 }
